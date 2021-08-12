@@ -1,5 +1,4 @@
 import os
-
 import pywebio
 from pywebio.input import input, TEXT
 from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link
@@ -10,12 +9,7 @@ import main
 def seven_dogs():
     keyword = input("Input your keyword：", type=TEXT)
     put_markdown(f'# **Search results for \"{keyword}/".**')
-    list2x = []
-    with open('results.csv', 'r') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            list2x.append(row)
-        f.close()
+
     put_table(generate_table_content(), header=['Title', 'Price (USD)', 'Shop', 'Link']).style(
         'width: 200%; margin-left:-50%; '
         'margin-right: 20%;')
