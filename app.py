@@ -12,7 +12,7 @@ import main
 def seven_dogs():
     set_env(title='Danny\'s App')
     keyword = input("Input your keyword：", type=TEXT)
-    put_markdown(f'# **Search results for \"{keyword}/".**')
+    put_markdown(f'# **Search results for \"{keyword}\":**')
 
     put_table(generate_table_content(keyword), header=['Title', 'Price (USD)', 'Shop', 'Link']).style(
         'width: 200%; margin-left:-50%; '
