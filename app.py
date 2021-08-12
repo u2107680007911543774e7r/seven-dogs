@@ -1,3 +1,5 @@
+import os
+
 import pywebio
 from pywebio.input import input, TEXT
 from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link
@@ -33,4 +35,5 @@ def generate_table_content():
 
 
 if __name__ == '__main__':
-    pywebio.start_server(seven_dogs, port=55)
+    port = int(os.environ.get("PORT", 5000))
+    pywebio.start_server(seven_dogs, port=port)
