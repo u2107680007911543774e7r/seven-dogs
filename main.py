@@ -1,4 +1,5 @@
 import csv
+import os
 import random
 import re
 import time
@@ -57,7 +58,10 @@ def define_proxy():
 
 def search_3(keyword):
     chrome_options = Options()
-    chrome_options.headless = True
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
     chrome_options.page_load_strategy = 'none'
     chrome_options.add_argument('user-agent=Chrome/80.0.3987.149')
     # proxy = define_proxy()
@@ -68,7 +72,7 @@ def search_3(keyword):
     #     "proxyType": "MANUAL",
     # }
     # chrome_options.add_argument('--proxy-server=%s' % proxy)
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
     results = []
     numbers = re.compile(r'\d+(?:\.\d+)?')
     try:
