@@ -20,7 +20,7 @@ def seven_dogs():
         'width: 200%; margin-left:-50%; '
         'margin-right: 20%;')
     end = time.time()
-    put_text(f'Runtime: {end - start}")')
+    put_text(f'Runtime: {end - start} secs')
 
 
 def generate_table_content(keyword):

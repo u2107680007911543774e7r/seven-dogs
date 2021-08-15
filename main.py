@@ -80,7 +80,7 @@ def search_3(keyword):
         driver.get(START_URLS[0])
         element = driver.find_element_by_xpath('//*[@id="search"]')
         element.send_keys(keyword, Keys.ENTER)
-        driver.implicitly_wait(3)
+        driver.implicitly_wait(2)
         title = driver.find_element(By.XPATH,
                                     '/html/body/div[2]/div[2]/div/div[2]/div/div/div[3]/div[1]/div[1]/h1').text
         price = numbers.findall(driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div[2]/div/div/div['
@@ -97,7 +97,7 @@ def search_3(keyword):
         element = driver.find_element_by_xpath('//*[@id="rhf_header_element"]/nav/div/div[3]/form/div/div['
                                                '2]/div/input[1]')
         element.send_keys(keyword, Keys.ENTER)
-        driver.implicitly_wait(2)
+        driver.implicitly_wait(1)
         title = driver.find_element(By.CLASS_NAME, 'product-shelf-title').text
         price = numbers.findall(driver.find_element(By.XPATH, '/html/body/main/div[3]/div[1]/div[2]/div['
                                                               '2]/div/div/section[2]/div/div[1]/div[2]/div['
@@ -114,7 +114,7 @@ def search_3(keyword):
         element = driver.find_element_by_xpath(
             '/html/body/div[6]/div[2]/header/div[3]/div/div[2]/div/form/div[1]/input')
         element.send_keys(keyword, Keys.ENTER)
-        driver.implicitly_wait(3)
+        driver.implicitly_wait(2)
         # title = driver.find_element(By.XPATH, '/html/body/div[8]/div[3]/div/div[1]/div[4]/div[2]/div/div[1]/div['
         #                                      '2]/ul/li[1]/div/div[4]/a').text
         title = driver.find_element_by_class_name('pr-prod-text').get_attribute('a').text
