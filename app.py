@@ -1,4 +1,6 @@
 import os
+import time
+
 import pywebio
 from pywebio.input import input, TEXT
 from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link
@@ -12,11 +14,13 @@ import main
 def seven_dogs():
     set_env(title='Danny\'s App')
     keyword = input("Input your keyword：", type=TEXT)
-    put_markdown(f'# **Search results for \"{keyword}\":**')
-
+    put_markdown(f'# **Search results \"{keyword}\":**')
+    start = time.time()
     put_table(generate_table_content(keyword), header=['Title', 'Price (USD)', 'Shop', 'Link']).style(
         'width: 200%; margin-left:-50%; '
         'margin-right: 20%;')
+    end = time.time()
+    put_text(f'Runtime: {end - start}")')
 
 
 def generate_table_content(keyword):
