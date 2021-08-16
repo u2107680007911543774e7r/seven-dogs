@@ -104,7 +104,7 @@ def search_3(keyword):
         # link = driver.current_url
         soup = BeautifulSoup(get_html(kohls_search_link(keyword)), 'html5lib')
         title = soup.find('h1', class_='product-title').text.strip()
-        price = soup.find('span', class_='pdpprice-row2-main-text').text.strip()
+        price = numbers.findall(soup.find('span', class_='pdpprice-row2-main-text').text.strip())[0]
         link = soup.find('link', rel='canonical')['href']
         results.append([title, price, website, link])
         driver.quit()
@@ -140,7 +140,6 @@ def search_3(keyword):
                                                                                       class_='product-price '
                                                                                              'match-height-element').find(
             'span', class_='price').text.strip()
-        numbers = re.compile(r'\d+(?:\.\d+)?')
         results.append([title, numbers.findall(price)[0], website, link])
         driver.quit()
         return results
@@ -148,18 +147,22 @@ def search_3(keyword):
         results.append([f'Your search for {keyword} did not match any products on {website}.', '', '', ''])
     try:
         website = 'Barnes & Noble'
-        driver.get(START_URLS[1])
-        driver.maximize_window()
-        element = driver.find_element_by_xpath('//*[@id="rhf_header_element"]/nav/div/div[3]/form/div/div['
-                                               '2]/div/input[1]')
-        element.send_keys(keyword, Keys.ENTER)
-        driver.implicitly_wait(1)
-        title = driver.find_element(By.CLASS_NAME, 'product-shelf-title').text
-        price = numbers.findall(driver.find_element(By.XPATH, '/html/body/main/div[3]/div[1]/div[2]/div['
-                                                              '2]/div/div/section[2]/div/div[1]/div[2]/div['
-                                                              '4]/div/a/span[2]').text)[0]
-        link = driver.find_element_by_xpath('/html/body/main/div[3]/div[1]/div[2]/div[2]/div/div/section[2]/div/div['
-                                            '1]/div[2]/div[1]/a').get_attribute('href')
+        headers = {
+            'accept': 'text / html, application / xhtml + xml, application / xml; q = 0.9, image / avif, image / webp, '
+                      'image / apng, * / *;q = 0.8, application / signed - exchange; v = b3; q = 0.9',
+            'accept-encoding': 'gzip, deflate, br',
+            'accept-language': 'en - US, en; q = 0.9',
+            'referer': barnesnoble_search_link(),
+            'sec-ch-ua': '\"Chromium\"; v = \"92\", \" Not A;Brand\"; v = \"99\", \"Google Chrome\"; v = \"92\"',
+            'upgrade-insecure-requests': '1',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                          'Chrome/92.0.4515.131 Safari/537.36 '
+        }
+        r = requests.get(barnesnoble_search_link(keyword), headers=headers).text
+        soup = BeautifulSoup(r, 'html5lib')
+        title = soup.find('div', class_='product-shelf-title').find('a').text
+        price = numbers.findall(soup.find('div', class_='product-shelf-pricing').find('span', class_='sr-only').text)[0]
+        link = 'https://www.barnesandnoble.com/' + soup.find('div', class_='product-shelf-title').find('a')['href']
         results.append([title, price, website, link])
         driver.quit()
         return results
