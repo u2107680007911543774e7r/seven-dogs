@@ -59,6 +59,7 @@ def define_proxy():
     proxy = random.choice(us_proxies).get_address()
     return proxy
 
+
 def kohls_search_link(key):
     return KOHLS + key.strip().replace(' ', '+')
 
@@ -152,7 +153,7 @@ def search_3(keyword):
                       'image / apng, * / *;q = 0.8, application / signed - exchange; v = b3; q = 0.9',
             'accept-encoding': 'gzip, deflate, br',
             'accept-language': 'en - US, en; q = 0.9',
-            'referer': barnesnoble_search_link(),
+            'referer': barnesnoble_search_link(keyword),
             'sec-ch-ua': '\"Chromium\"; v = \"92\", \" Not A;Brand\"; v = \"99\", \"Google Chrome\"; v = \"92\"',
             'upgrade-insecure-requests': '1',
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
