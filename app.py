@@ -12,7 +12,7 @@ import main
 
 
 def seven_dogs():
-    set_env(title='Danny\'s App')
+    set_env(title='FBASearch')
     keyword = input("Input your keyword：", type=TEXT)
     put_markdown(f'# **Search results \"{keyword}\":**')
     start = time.time()
