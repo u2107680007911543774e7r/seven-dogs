@@ -16,7 +16,7 @@ def seven_dogs():
     keyword = input("Input your keyword：", type=TEXT)
 
     start = time.time()
-    with put_text('Awaiting results...', position='center'), put_loading(shape='grow', color='dark', position='center'):
+    with put_loading(shape='grow', color='dark'):
         content = generate_table_content(keyword)
         put_markdown(f'# **Search results \"{keyword}\":**')
         put_table(content, header=['Title', 'Price', 'Shop', 'Link'])
