@@ -17,14 +17,15 @@ def seven_dogs():
 
     start = time.time()
     with put_loading():
+        content = generate_table_content(keyword)
         put_markdown(f'# **Search results \"{keyword}\":**')
-        put_table(generate_table_content(keyword), header=['Title', 'Price (USD)', 'Shop', 'Link'])
+        put_table(content, header=['Title', 'Price (USD)', 'Shop', 'Link'])
     # .style(
     #         'width: 200%; margin-left:-50%; '
     #         'margin-right: 20%;')
         end = time.time()
         put_code(f'Runtime: {end - start} secs')
-        put_buttons([dict(label='dark', value='Back', color='dark')], onclick='')
+        put_buttons([dict(label='dark', value='Back', color='dark')], onclick=put_text('In progress...'))
 
 
 def generate_table_content(keyword):
