@@ -3,7 +3,7 @@ import time
 
 import pywebio
 from pywebio.input import input, TEXT
-from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link, put_buttons
+from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link, put_buttons, put_code
 import csv
 
 from pywebio.session import set_env
@@ -16,12 +16,13 @@ def seven_dogs():
     keyword = input("Input your keyword：", type=TEXT)
     put_markdown(f'# **Search results \"{keyword}\":**')
     start = time.time()
-    put_table(generate_table_content(keyword), header=['Title', 'Price (USD)', 'Shop', 'Link']).style(
-        'width: 200%; margin-left:-50%; '
-        'margin-right: 20%;')
+    put_table(generate_table_content(keyword), header=['Title', 'Price (USD)', 'Shop', 'Link'])
+    # .style(
+    #         'width: 200%; margin-left:-50%; '
+    #         'margin-right: 20%;')
     end = time.time()
-    put_text(f'Runtime: {end - start} secs')
-    # put_buttons(['Back'], onclick=seven_dogs())
+    put_code(f'Runtime: {end - start} secs')
+    put_buttons(['Back'], onclick='https://seven-dogs.herokuapp.com/')
 
 
 def generate_table_content(keyword):
@@ -33,7 +34,12 @@ def generate_table_content(keyword):
     #     f.close()
     res = []
     for item in list2x:
-        res.append([put_text(item[0]), put_text(item[1]), put_text(item[2]), put_link(url=item[3], name='Visit Link', new_window=True)])
+        if item[3] != '':
+            res.append([put_text(item[0]), put_text(item[1]), put_text(item[2]),
+                        put_link(url=item[3], name='Visit Link', new_window=True)])
+        else:
+            res.append([put_text(item[0]), put_text(item[1]), put_text(item[2]),
+                        put_text(item[3])])
     return res
 
 
