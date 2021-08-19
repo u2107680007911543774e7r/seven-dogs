@@ -3,7 +3,7 @@ import time
 
 import pywebio
 from pywebio.input import input, TEXT
-from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link, put_buttons, put_code
+from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link, put_buttons, put_code, put_loading
 import csv
 
 from pywebio.session import set_env
@@ -14,15 +14,17 @@ import main
 def seven_dogs():
     set_env(title='FBASearch')
     keyword = input("Input your keyword：", type=TEXT)
-    put_markdown(f'# **Search results \"{keyword}\":**')
+
     start = time.time()
-    put_table(generate_table_content(keyword), header=['Title', 'Price (USD)', 'Shop', 'Link'])
+    with put_loading():
+        put_markdown(f'# **Search results \"{keyword}\":**')
+        put_table(generate_table_content(keyword), header=['Title', 'Price (USD)', 'Shop', 'Link'])
     # .style(
     #         'width: 200%; margin-left:-50%; '
     #         'margin-right: 20%;')
-    end = time.time()
-    put_code(f'Runtime: {end - start} secs')
-    put_buttons(['Back'], onclick='https://seven-dogs.herokuapp.com/')
+        end = time.time()
+        put_code(f'Runtime: {end - start} secs')
+        put_buttons([dict(label='dark', value='Back', color='dark')], onclick='')
 
 
 def generate_table_content(keyword):
