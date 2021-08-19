@@ -3,7 +3,7 @@ import time
 
 import pywebio
 from pywebio.input import input, TEXT
-from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link
+from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link, put_buttons
 import csv
 
 from pywebio.session import set_env
@@ -21,6 +21,7 @@ def seven_dogs():
         'margin-right: 20%;')
     end = time.time()
     put_text(f'Runtime: {end - start} secs')
+    put_buttons(['Back'], onclick=seven_dogs())
 
 
 def generate_table_content(keyword):
@@ -32,7 +33,7 @@ def generate_table_content(keyword):
     #     f.close()
     res = []
     for item in list2x:
-        res.append([put_text(item[0]), put_text(item[1]), put_text(item[2]), put_link(url=item[3], name=item[3])])
+        res.append([put_text(item[0]), put_text(item[1]), put_text(item[2]), put_link(url=item[3], name='Visit Link', new_window=True)])
     return res
 
 

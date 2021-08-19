@@ -105,13 +105,11 @@ def search_3(keyword):
         # link = driver.current_url
         soup = BeautifulSoup(get_html(kohls_search_link(keyword)), 'html5lib')
         title = soup.find('h1', class_='product-title').text.strip()
-        price = numbers.findall(soup.find('span', class_='pdpprice-row2-main-text').text.strip())[0]
+        price = '$' + numbers.findall(soup.find('span', class_='pdpprice-row2-main-text').text.strip())[0]
         link = soup.find('link', rel='canonical')['href']
         results.append([title, price, website, link])
-        driver.quit()
-        return results
     except:
-        results.append([f'Your search for {keyword} did not match any products on {website}.', '', '', ''])
+        results.append([f'No results found for \"{website}\".', '', '', ''])
     try:
         website = 'Bealls'
         # driver.get(START_URLS[2])
@@ -137,15 +135,13 @@ def search_3(keyword):
                                                                                                    'match-height'
                                                                                                    '-element').find(
             'a')['href']
-        price = soup.find('div', class_='dataLayer-productClick product-block1').find('div',
+        price = '$' + soup.find('div', class_='dataLayer-productClick product-block1').find('div',
                                                                                       class_='product-price '
                                                                                              'match-height-element').find(
             'span', class_='price').text.strip()
         results.append([title, numbers.findall(price)[0], website, link])
-        driver.quit()
-        return results
     except:
-        results.append([f'Your search for {keyword} did not match any products on {website}.', '', '', ''])
+        results.append([f'No results found for \"{website}\".', '', '', ''])
     try:
         website = 'Barnes & Noble'
         headers = {
@@ -162,12 +158,10 @@ def search_3(keyword):
         r = requests.get(barnesnoble_search_link(keyword), headers=headers).text
         soup = BeautifulSoup(r, 'html5lib')
         title = soup.find('div', class_='product-shelf-title').find('a').text
-        price = numbers.findall(soup.find('div', class_='product-shelf-pricing').find('span', class_='sr-only').text)[0]
+        price = '$' + numbers.findall(soup.find('div', class_='product-shelf-pricing').find('span', class_='sr-only').text)[0]
         link = 'https://www.barnesandnoble.com/' + soup.find('div', class_='product-shelf-title').find('a')['href']
         results.append([title, price, website, link])
-        driver.quit()
-        return results
     except:
-        results.append([f'Your search for {keyword} did not match any products on {website}.', '', '', ''])
+        results.append([f'No results found for \"{website}\".', '', '', ''])
     driver.quit()
     return results
