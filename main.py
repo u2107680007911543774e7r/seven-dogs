@@ -74,7 +74,7 @@ def barnesnoble_search_link(key):
 
 def search_3(keyword):
     chrome_options = Options()
-    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    # chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
@@ -88,7 +88,7 @@ def search_3(keyword):
     #     "proxyType": "MANUAL",
     # }
     # chrome_options.add_argument('--proxy-server=%s' % proxy)
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+    # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
     results = []
     numbers = re.compile(r'\d+(?:\.\d+)?')
     try:
@@ -164,5 +164,5 @@ def search_3(keyword):
         results.append([title, price, website, link])
     except:
         results.append([f'No results found for \"{website}\".', '', '', ''])
-    driver.quit()
+    # driver.quit()
     return results

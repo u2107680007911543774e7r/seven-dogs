@@ -25,7 +25,7 @@ def seven_dogs():
     #         'margin-right: 20%;')
         end = time.time()
         put_code(f'Runtime: {end - start} secs')
-    put_buttons([dict(label='Back', value='dark', color='dark')], onclick=put_text('In progress...'))
+        put_buttons([dict(label='Back', value='dark', color='dark')], onclick=put_text('In progress...'))
 
 
 def generate_table_content(keyword):
