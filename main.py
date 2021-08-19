@@ -135,11 +135,11 @@ def search_3(keyword):
                                                                                                    'match-height'
                                                                                                    '-element').find(
             'a')['href']
-        price = '$' + soup.find('div', class_='dataLayer-productClick product-block1').find('div',
+        price = '$' + numbers.findall(soup.find('div', class_='dataLayer-productClick product-block1').find('div',
                                                                                       class_='product-price '
                                                                                              'match-height-element').find(
-            'span', class_='price').text.strip()
-        results.append([title, numbers.findall(price)[0], website, link])
+            'span', class_='price').text.strip())[0]
+        results.append([title, price, website, link])
     except:
         results.append([f'No results found for \"{website}\".', '', '', ''])
     try:
