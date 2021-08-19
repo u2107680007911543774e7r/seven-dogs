@@ -127,6 +127,9 @@ def search_3(keyword):
         # price = numbers.findall(driver.find_element_by_class_name('price').get_attribute('span').text)[0]
         # link = driver.find_element_by_class_name('pr-prod-text').get_attribute('href')
         soup = BeautifulSoup(get_html(bealls_search_link(keyword)), 'html5lib')
+        soup.find('h1', class_='no-results-heading')
+        results.append([f'No results found for \"{website}\".', '', '', ''])
+    except:
         title = soup.find('div', class_='dataLayer-productClick product-block1').find('div', class_='product-name '
                                                                                                     'match-height'
                                                                                                     '-element').find(
@@ -136,12 +139,10 @@ def search_3(keyword):
                                                                                                    '-element').find(
             'a')['href']
         price = '$' + numbers.findall(soup.find('div', class_='dataLayer-productClick product-block1').find('div',
-                                                                                      class_='product-price '
-                                                                                             'match-height-element').find(
+                                                                                                            class_='product-price '
+                                                                                                                   'match-height-element').find(
             'span', class_='price').text.strip())[0]
         results.append([title, price, website, link])
-    except:
-        results.append([f'No results found for \"{website}\".', '', '', ''])
     try:
         website = 'Barnes & Noble'
         headers = {
