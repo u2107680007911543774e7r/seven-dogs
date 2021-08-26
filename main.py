@@ -73,13 +73,13 @@ def barnesnoble_search_link(key):
 
 
 def search_3(keyword):
-    chrome_options = Options()
+    # chrome_options = Options()
     # chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.page_load_strategy = 'none'
-    chrome_options.add_argument('user-agent=Chrome/80.0.3987.149')
+    # chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("--disable-dev-shm-usage")
+    # chrome_options.add_argument("--no-sandbox")
+    # chrome_options.page_load_strategy = 'none'
+    # chrome_options.add_argument('user-agent=Chrome/80.0.3987.149')
     # proxy = define_proxy()
     # webdriver.DesiredCapabilities.CHROME['proxy'] = {
     #     "httpProxy": proxy,

@@ -1,11 +1,10 @@
 import os
 import time
-
 import pywebio
 from pywebio.input import input, TEXT
 from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link, put_buttons, put_code, put_loading
-import csv
-
+from pywebio.platform.flask import webio_view
+from flask import Flask
 from pywebio.session import set_env
 
 import main
@@ -16,13 +15,13 @@ def seven_dogs():
     keyword = input("Input your keyword：", type=TEXT)
 
     start = time.time()
-    with put_loading(shape='grow', color='dark'):
+    with put_loading(shape='grow', color='dark').style('margin-left: 50%; width:4rem; height:4rem'):
         content = generate_table_content(keyword)
         put_markdown(f'# **Search results \"{keyword}\":**')
         put_table(content, header=['Title', 'Price', 'Shop', 'Link'])
-    # .style(
-    #         'width: 200%; margin-left:-50%; '
-    #         'margin-right: 20%;')
+        # .style(
+        #         'width: 200%; margin-left:-50%; '
+        #         'margin-right: 20%;')
         end = time.time()
         put_code(f'Runtime: {end - start} secs')
         put_buttons([dict(label='Back', value='dark', color='dark')], onclick=put_text('In progress...'))
@@ -48,4 +47,10 @@ def generate_table_content(keyword):
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    pywebio.start_server(seven_dogs, port=port)
+    app = Flask(__name__)
+
+    # `task_func` is PyWebIO task function
+    app.add_url_rule('/tool', 'webio_view', webio_view(seven_dogs),
+                     methods=['GET', 'POST', 'OPTIONS'])  # need GET,POST and OPTIONS methods
+
+    app.run(host='localhost', port=port)  # port=port
