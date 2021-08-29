@@ -75,4 +75,4 @@ if __name__ == '__main__':
     # app.add_url_rule('/tool', 'webio_view', webio_view(seven_dogs('test')),
     #                   methods=['GET', 'POST', 'OPTIONS'])  # need GET,POST and OPTIONS methods
 
-    app.run(host='localhost', port=port)  # port=port /5000
+    app.run(host='0.0.0.0', port=port)  # port=port /5000
