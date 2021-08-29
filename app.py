@@ -59,7 +59,8 @@ if __name__ == '__main__':
         if request.method == 'POST':
             text = request.form['search']
         # return redirect('/search.html')
-            return redirect('/io')
+            main.search_3(text)
+            return render_template('search.html')
         else:
             return render_template('index.html')
 
@@ -77,7 +78,7 @@ if __name__ == '__main__':
     def search():
         return render_template('search.html')
 
-    app.add_url_rule('/tool', 'webio_view', webio_view(seven_dogs('test')),
-                      methods=['GET', 'POST', 'OPTIONS'])  # need GET,POST and OPTIONS methods
+    # app.add_url_rule('/tool', 'webio_view', webio_view(seven_dogs('test')),
+    #                   methods=['GET', 'POST', 'OPTIONS'])  # need GET,POST and OPTIONS methods
 
     app.run(host='localhost', port=5000)  # port=port
