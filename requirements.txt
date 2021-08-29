@@ -45,3 +45,5 @@ ua-parser==0.10.0
 urllib3==1.26.6
 user-agents==2.2.0
 webencodings==0.5.1
+
+Flask~=2.0.1

@@ -1,17 +1,8 @@
 import csv
-import os
 import random
 import re
-import time
 import requests
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver import DesiredCapabilities
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 from http_request_randomizer.requests.proxy.requestProxy import RequestProxy
 
 START_URLS = ['https://www.kohls.com/',

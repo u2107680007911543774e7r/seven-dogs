@@ -4,17 +4,15 @@ import pywebio
 from pywebio.input import input, TEXT
 from pywebio.output import put_text, put_markdown, put_table, put_grid, put_link, put_buttons, put_code, put_loading
 from pywebio.platform.flask import webio_view
-from flask import Flask
+from flask import Flask, render_template, redirect, request, url_for
 from pywebio.session import set_env
-
+from flask_bootstrap import Bootstrap
 import main
 
 
-def seven_dogs():
+def seven_dogs(keyword):
     set_env(title='FBASearch')
-    keyword = input("Input your keyword：", type=TEXT)
 
-    start = time.time()
     with put_loading(shape='grow', color='dark').style('margin-left: 50%; width:4rem; height:4rem'):
         content = generate_table_content(keyword)
         put_markdown(f'# **Search results \"{keyword}\":**')
@@ -22,8 +20,6 @@ def seven_dogs():
         # .style(
         #         'width: 200%; margin-left:-50%; '
         #         'margin-right: 20%;')
-        end = time.time()
-        put_code(f'Runtime: {end - start} secs')
         put_buttons([dict(label='Back', value='dark', color='dark')], onclick=put_text('In progress...'))
 
 
@@ -46,11 +42,42 @@ def generate_table_content(keyword):
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app = Flask(__name__)
+    # port = int(os.environ.get("PORT", 5000))
+    app = Flask(__name__, template_folder='templates')
+    Bootstrap(app)
 
-    # `task_func` is PyWebIO task function
-    app.add_url_rule('/tool', 'webio_view', webio_view(seven_dogs),
-                     methods=['GET', 'POST', 'OPTIONS'])  # need GET,POST and OPTIONS methods
 
-    app.run(host='localhost', port=port)  # port=port
+    @app.route('/')
+    @app.route('/index.html')
+    def home():
+        return render_template('index.html')
+
+
+    @app.route('/', methods=['POST'])
+    @app.route('/index.html', methods=['POST'])
+    def home_search():
+        if request.method == 'POST':
+            text = request.form['search']
+        # return redirect('/search.html')
+            return redirect('/io')
+        else:
+            return render_template('index.html')
+
+    @app.route('/faq.html', methods=['GET'])
+    def faq():
+        return render_template('faq.html')
+
+
+    @app.route('/contact.html', methods=['GET'])
+    def contact():
+        return render_template('contact.html')
+
+
+    @app.route('/search.html', methods=['GET'])
+    def search():
+        return render_template('search.html')
+
+    app.add_url_rule('/tool', 'webio_view', webio_view(seven_dogs('test')),
+                      methods=['GET', 'POST', 'OPTIONS'])  # need GET,POST and OPTIONS methods
+
+    app.run(host='localhost', port=5000)  # port=port
