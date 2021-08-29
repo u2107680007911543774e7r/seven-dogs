@@ -44,39 +44,33 @@ def generate_table_content(keyword):
 if __name__ == '__main__':
     # port = int(os.environ.get("PORT", 5000))
     app = Flask(__name__, template_folder='templates')
+    results = []
     Bootstrap(app)
 
 
-    @app.route('/')
-    @app.route('/index.html')
+    @app.route('/', methods=['GET', 'POST'])
+    @app.route('/index.html', methods=['GET', 'POST'])
     def home():
-        return render_template('index.html')
-
-
-    @app.route('/', methods=['POST'])
-    @app.route('/index.html', methods=['POST'])
-    def home_search():
-        if request.method == 'POST':
-            text = request.form['search']
-        # return redirect('/search.html')
-            main.search_3(text)
-            return render_template('search.html')
-        else:
+        if request.method == 'GET':
             return render_template('index.html')
+        else:
+            text = request.form['search']
+            r = main.search_3(text)
+            for i in r:
+                results.append(i)
+            return redirect('search.html')
 
     @app.route('/faq.html', methods=['GET'])
     def faq():
         return render_template('faq.html')
 
-
     @app.route('/contact.html', methods=['GET'])
     def contact():
         return render_template('contact.html')
 
-
-    @app.route('/search.html', methods=['GET'])
+    @app.route('/search.html')
     def search():
-        return render_template('search.html')
+        return render_template('search.html', results=results)
 
     # app.add_url_rule('/tool', 'webio_view', webio_view(seven_dogs('test')),
     #                   methods=['GET', 'POST', 'OPTIONS'])  # need GET,POST and OPTIONS methods
