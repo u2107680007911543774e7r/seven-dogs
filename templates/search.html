@@ -76,25 +76,33 @@
 		</div>
 
         <div class="row search-result-box">
-			{% for res in results %} {{ res }} {% endfor %}
-<!--          <div class="col-lg-4">-->
-<!--            <div class="box" data-aos="fade-up" data-aos-delay="200">-->
-<!--				<a href="#">-->
-<!--					<div class="box-s">-->
-<!--					  <div class="row">-->
-<!--						<div class="col-lg-6"><img src="{{url_for('static', filename='assets/img/result/walmart.png')}}" alt=""></div>-->
-<!--						<div class="col-lg-6 mobile-hide"><h2 class="text-right"><img src="{{url_for('static', filename='assets/img/result/star.png')}}"> $29.70</h2></div>-->
-<!--						<div class="box-d">-->
-<!--						<h3>Nike Swoosh Double Sweatbands</h3>-->
-<!--						<p>(1 Pair)</p>-->
-<!--						</div>-->
-<!--					  </div>-->
-<!--					  -->
-<!--				  </div>-->
-<!--				  <p class="golink text-center"><span class="text-right desktop-hide"><img src="{{url_for('static', filename='assets/img/result/star.png')}}"> $29.70</span> <span class="go">Go to website link</span> <span class="arrow-right"><img src="{{url_for('static', filename='assets/img/result/right-arrow.png')}}"></span></p>-->
-<!--			  </a>-->
-<!--            </div>-->
-<!--          </div>-->
+			{% for res in results %}
+          <div class="col-lg-4">
+            <div class="box" data-aos="fade-up" data-aos-delay="200">
+				<a href = {{ res[3] }}>
+					<div class="box-s">
+					  <div class="row">
+                          {% if res[2] == 'kohl' %}
+                          <div class="col-lg-6"><img src="{{url_for('static', filename='assets/img/result/kohl.png')}}" alt=""></div>
+                          {% endif %}
+                          {% if res[2] == 'bealls' %}
+                          <div class="col-lg-6"><img src="{{url_for('static', filename='assets/img/result/bealls.png')}}" alt=""></div>
+                          {% endif %}
+                          {% if res[2] == 'barnes&noble' %}
+                          <div class="col-lg-6"><img src="{{url_for('static', filename='assets/img/result/barnes&noble.png')}}" alt=""></div>
+                          {% endif %}
+						<div class="col-lg-6 mobile-hide"><h2 class="text-right"><img src="{{url_for('static', filename='assets/img/result/star.png')}}"> {{ res[1] }} </h2></div>
+						<div class="box-d">
+						<h3>{{ res[0] }}</h3>
+						</div>
+					  </div>
+
+				  </div>
+				  <p class="golink text-center"><span class="text-right desktop-hide"><img src="{{url_for('static', filename='assets/img/result/star.png')}}"> {{ res[1] }} </span> <span class="go">Go to website link</span> <span class="arrow-right"><img src="{{url_for('static', filename='assets/img/result/right-arrow.png')}}"></span></p>
+			  </a>
+            </div>
+          </div>
+            {% endfor %}
 <!--		   <div class="col-lg-4">-->
 <!--            <div class="box" data-aos="fade-up" data-aos-delay="200">-->
 <!--				<a href="#">-->

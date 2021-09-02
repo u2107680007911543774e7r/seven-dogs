@@ -83,7 +83,7 @@ def search_3(keyword):
     results = []
     numbers = re.compile(r'\d+(?:\.\d+)?')
     try:
-        website = 'Kohl\'s'
+        website = 'kohl'
         # driver.get(START_URLS[0])
         # element = driver.find_element_by_xpath('//*[@id="search"]')
         # element.send_keys(keyword, Keys.ENTER)
@@ -102,7 +102,7 @@ def search_3(keyword):
     except:
         results.append([f'No results found for \"{website}\".', '', '', ''])
     try:
-        website = 'Bealls'
+        website = 'bealls'
         # driver.get(START_URLS[2])
         # driver.maximize_window()
         # element = driver.find_element_by_xpath(
@@ -135,7 +135,7 @@ def search_3(keyword):
             'span', class_='price').text.strip())[0]
         results.append([title, price, website, link])
     try:
-        website = 'Barnes & Noble'
+        website = 'barnes&noble'
         headers = {
             'accept': 'text / html, application / xhtml + xml, application / xml; q = 0.9, image / avif, image / webp, '
                       'image / apng, * / *;q = 0.8, application / signed - exchange; v = b3; q = 0.9',
@@ -154,6 +154,15 @@ def search_3(keyword):
         link = 'https://www.barnesandnoble.com/' + soup.find('div', class_='product-shelf-title').find('a')['href']
         results.append([title, price, website, link])
     except:
-        results.append([f'No results found for \"{website}\".', '', '', ''])
+        title = soup.find('div', id='pdp-header-info').find('h1').text
+        price = '$' + \
+                numbers.findall(soup.find('span', id='pdp-cur-price').text)[0]
+        link = 'https://www.barnesandnoble.com/' + soup.find('link', rel='canonical')['href']
+        results.append([title, price, website, link])
+        #results.append([f'No results found for \"{website}\".', '', '', ''])
     # driver.quit()
-    return results
+    newres = []
+    for i in results:
+        if 'No results' not in i[0]:
+            newres.append(i)
+    return newres
