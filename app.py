@@ -42,7 +42,7 @@ def generate_table_content(keyword):
 
 
 if __name__ == '__main__':
-    # port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5000))
     app = Flask(__name__, template_folder='templates')
     results = []
     Bootstrap(app)
@@ -75,4 +75,4 @@ if __name__ == '__main__':
     # app.add_url_rule('/tool', 'webio_view', webio_view(seven_dogs('test')),
     #                   methods=['GET', 'POST', 'OPTIONS'])  # need GET,POST and OPTIONS methods
 
-    app.run(host='localhost', port=5000)  # port=port /5000 host='0.0.0.0'
+    app.run(host='0.0.0.0', port=port)  # port=port /5000 host='0.0.0.0'
