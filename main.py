@@ -120,7 +120,7 @@ def search_3(keyword):
         soup = BeautifulSoup(get_html(bealls_search_link(keyword)), 'html5lib')
         soup.find('h1', class_='no-results-heading')
         results.append([f'No results found for \"{website}\".', '', '', ''])
-    except:
+    except ():
         title = soup.find('div', class_='dataLayer-productClick product-block1').find('div', class_='product-name '
                                                                                                     'match-height'
                                                                                                     '-element').find(
@@ -133,6 +133,11 @@ def search_3(keyword):
                                                                                                             class_='product-price '
                                                                                                                    'match-height-element').find(
             'span', class_='price').text.strip())[0]
+        results.append([title, price, website, link])
+    except:
+        title = soup.find('div', class_='product_listing_container').find('li').find('div', class_='product-name match-height-element').text.strip()
+        link = soup.find('div', class_='product_listing_container').find('li').find('div', class_='product-name match-height-element').find('a')['href']
+        price = '$' + numbers.findall(soup.find('div', class_='product_listing_container').find('li').find('div', class_='product-price match-height-element').find('span', class_='price').text.strip())[0]
         results.append([title, price, website, link])
     try:
         website = 'barnes&noble'
@@ -153,13 +158,14 @@ def search_3(keyword):
         price = '$' + numbers.findall(soup.find('div', class_='product-shelf-pricing').find('span', class_='sr-only').text)[0]
         link = 'https://www.barnesandnoble.com/' + soup.find('div', class_='product-shelf-title').find('a')['href']
         results.append([title, price, website, link])
-    except:
+    except ():
         title = soup.find('div', id='pdp-header-info').find('h1').text
         price = '$' + \
                 numbers.findall(soup.find('span', id='pdp-cur-price').text)[0]
         link = 'https://www.barnesandnoble.com/' + soup.find('link', rel='canonical')['href']
         results.append([title, price, website, link])
-        #results.append([f'No results found for \"{website}\".', '', '', ''])
+    except:
+        results.append([f'No results found for \"{website}\".', '', '', ''])
     # driver.quit()
     newres = []
     for i in results:

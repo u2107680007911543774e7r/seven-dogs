@@ -54,6 +54,7 @@ if __name__ == '__main__':
         if request.method == 'GET':
             return render_template('index.html')
         else:
+            results.clear()
             text = request.form['search']
             r = main.search_3(text)
             for i in r:
