@@ -118,8 +118,16 @@ def search_3(keyword):
         # price = numbers.findall(driver.find_element_by_class_name('price').get_attribute('span').text)[0]
         # link = driver.find_element_by_class_name('pr-prod-text').get_attribute('href')
         soup = BeautifulSoup(get_html(bealls_search_link(keyword)), 'html5lib')
-        soup.find('h1', class_='no-results-heading')
-        results.append([f'No results found for \"{website}\".', '', '', ''])
+        title = soup.find('div', class_='product_listing_container').find('li').find('div',
+                                                                                     class_='product-name match-height-element').text.strip()
+        link = soup.find('div', class_='product_listing_container').find('li').find('div',
+                                                                                    class_='product-name match-height-element').find(
+            'a')[
+            'href']
+        price = '$' + numbers.findall(soup.find('div', class_='product_listing_container').find('li').find('div',
+                                                                                                           class_='product-price match-height-element').find(
+            'span', class_='price').text.strip())[0]
+        results.append([title, price, website, link])
     except ():
         title = soup.find('div', class_='dataLayer-productClick product-block1').find('div', class_='product-name '
                                                                                                     'match-height'
@@ -135,10 +143,7 @@ def search_3(keyword):
             'span', class_='price').text.strip())[0]
         results.append([title, price, website, link])
     except:
-        title = soup.find('div', class_='product_listing_container').find('li').find('div', class_='product-name match-height-element').text.strip()
-        link = soup.find('div', class_='product_listing_container').find('li').find('div', class_='product-name match-height-element').find('a')['href']
-        price = '$' + numbers.findall(soup.find('div', class_='product_listing_container').find('li').find('div', class_='product-price match-height-element').find('span', class_='price').text.strip())[0]
-        results.append([title, price, website, link])
+        results.append([f'No results found for \"{website}\".', '', '', ''])
     try:
         website = 'barnes&noble'
         headers = {
@@ -168,6 +173,7 @@ def search_3(keyword):
         results.append([f'No results found for \"{website}\".', '', '', ''])
     # driver.quit()
     newres = []
+    print(results)
     for i in results:
         if 'No results' not in i[0]:
             newres.append(i)
